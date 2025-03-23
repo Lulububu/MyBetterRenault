@@ -40,13 +40,13 @@
                             </li>
                             <li class="list-group-item">
                                 <strong>État de charge:</strong> 
-                                {% if battery_status.chargingStatus == 1 %}
+                                {% if battery_status.plugStatus == 1 %}
                                     En charge
                                 {% else %}
                                     Non branché
                                 {% endif %}
                             </li>
-                            {% if battery_status.chargingStatus == 1 %}
+                            {% if battery_status.plugStatus == 1 %}
                             <li class="list-group-item">
                                 <strong>Temps restant:</strong> {{ battery_status.remainingTime }} minutes
                             </li>
@@ -55,7 +55,7 @@
 
                         <h5>Actions</h5>
                         <form method="POST" class="mb-3">
-                            {% if battery_status.chargingStatus == 1 %}
+                            {% if battery_status.plugStatus == 1 %}
                             <button type="submit" name="action" value="stop" class="btn btn-danger">
                                 Arrêter la charge
                             </button>

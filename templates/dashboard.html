@@ -30,15 +30,14 @@
             <div class="col-md-6 mb-4">
                 <div class="card">
                     <div class="card-header">
-                        <h4>{{ vehicle.brand }} {{ vehicle.model }}</h4>
+                        <h4>{{ vehicle.vehicleDetails.brand.label }} {{ vehicle.vehicleDetails.model.label }}</h4>
                     </div>
                     <div class="card-body">
-                        <p><strong>VIN:</strong> {{ vehicle.vin }}</p>
-                        <p><strong>Registration:</strong> {{ vehicle.registration }}</p>
+                        <p><strong>VIN</strong> {{ vehicle.vin }}</p>
+                        <p><strong>Immatriculation</strong> {{ vehicle.vehicleDetails.registrationNumber }}</p>
                         <div class="mt-3">
                             <h5>Actions</h5>
                             <a href="{{ url_for('vehicle_status', vin=vehicle.vin) }}" class="btn btn-info">État de la batterie</a>
-                            <a href="{{ url_for('vehicle_location', vin=vehicle.vin) }}" class="btn btn-secondary">Localisation</a>
                             <a href="{{ url_for('vehicle_charging', vin=vehicle.vin) }}" class="btn btn-success">Recharge</a>
                         </div>
                     </div>

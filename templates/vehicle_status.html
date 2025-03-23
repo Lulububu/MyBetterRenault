@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MyRenault - État du véhicule</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
 </head>
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -43,13 +44,13 @@
                             </li>
                             <li class="list-group-item">
                                 <strong>État de charge:</strong> 
-                                {% if battery_status.chargingStatus == 1 %}
+                                {% if battery_status.plugStatus == 1 %}
                                     En charge
                                 {% else %}
                                     Non branché
                                 {% endif %}
                             </li>
-                            {% if battery_status.chargingStatus == 1 %}
+                            {% if battery_status.plugStatus == 1 %}
                             <li class="list-group-item">
                                 <strong>Temps restant:</strong> {{ battery_status.remainingTime }} minutes
                             </li>
@@ -59,6 +60,7 @@
                     <div class="col-md-6">
                         <h5>Dernière position connue</h5>
                         {% if location %}
+                        <div id="map" style="height: 400px; margin-bottom: 20px;"></div>
                         <ul class="list-group">
                             <li class="list-group-item">
                                 <strong>Latitude:</strong> {{ location.gpsLatitude }}
@@ -80,5 +82,17 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    {% if location %}
+    <script>
+        const map = L.map('map').setView([{{ location.gpsLatitude }}, {{ location.gpsLongitude }}], 15);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+        L.marker([{{ location.gpsLatitude }}, {{ location.gpsLongitude }}])
+            .addTo(map)
+            .bindPopup('Position du véhicule');
+    </script>
+    {% endif %}
 </body>
 </html>
